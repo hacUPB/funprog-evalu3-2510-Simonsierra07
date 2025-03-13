@@ -1,7 +1,7 @@
 #include <stdio.h>
 
 int main() {
-    float num1, num2;
+    int num1, num2;
     int opcion;
 
     printf("Ingrese el primer número: ");
