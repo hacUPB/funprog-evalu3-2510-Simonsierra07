@@ -42,19 +42,3 @@ int main() {
 
     return 0;
 }
-esistenciaConductor();
-                break;
-            case 4:
-                calcularResistenciaLED();
-                break;
-            case 5:
-                printf("¡Gracias por usar la calculadora!\n");
-                break;
-            default:
-                printf("Opción no válida, intenta de nuevo.\n");
-        }
-    } while(opcion != 5);
-
-
-    return 0;
-}
