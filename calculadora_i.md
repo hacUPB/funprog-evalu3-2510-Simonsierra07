@@ -84,7 +84,7 @@ void calcularLeyOhm() {
     printf("Ingresa el número de la opción deseada: ");
     scanf("%d", &opcion);
 
-    // Realizamos el cálculo dependiendo de la opción seleccionada
+   
     if (opcion == 1) {
         // Calcular Tensión (V)
         printf("Ingresa el valor de la corriente (I) en amperios: ");
@@ -113,7 +113,7 @@ void calcularLeyOhm() {
         printf("La Resistencia es: %.2f ohmios\n", R);
     } 
     else if (opcion == 4) {
-        return;  // Volver al menú principal
+        return; 
     } 
     else {
         printf("Opción no válida.\n");
