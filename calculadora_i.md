@@ -218,3 +218,163 @@ void calcularFactorDePotencia() {
    
    El programa calcula S a partir de V y I, y luego calcula el **factor de potencia** dividiendo P entre S.
 
+
+
+
+**Calcular la Resistencia de un Conductor**
+
+
+La resistencia eléctrica de un cable depende del material, su longitud, su grosor (área de sección transversal) y la temperatura. Cuando sube la temperatura, la resistencia también suele subir.
+
+### Fórmulas:
+
+1. **Resistencia a 20 °C** (temperatura estándar):
+\[
+R_{20} = \rho \cdot \frac{L}{A}
+\]
+- \( \rho \): resistividad del material (en ohm·metro, Ω·m)
+- \( L \): longitud del conductor (en metros)
+- \( A \): área de la sección transversal (en metros cuadrados)
+
+2. **Resistencia corregida por temperatura**:
+\[
+R = R_{20} \cdot (1 + \alpha \cdot (T - 20))
+\]
+- \( \alpha \): coeficiente de temperatura del material
+- \( T \): temperatura real de operación (en °C)
+
+```c
+#include <stdio.h>
+#include <string.h>
+
+int main() {
+    char opcion[10];
+
+    printf("\n¿Desea calcular resistencia de un conductor o de un LED? (conductor/led): ");
+    scanf("%s", opcion);
+
+    if (strcmp(opcion, "conductor") == 0) {
+        char material[20];
+        double resistividad, coef_temp;
+        double longitud, area, temperatura;
+        double R20, R;
+
+        printf("\n--- CALCULAR RESISTENCIA DE UN CONDUCTOR ---\n");
+        printf("Material (oro, cobre, aluminio, otros): ");
+        scanf("%s", material);
+
+        // Definimos valores de resistividad y coef_temp según el material
+        if (strcmp(material, "oro") == 0) {
+            resistividad = 2.44e-8;
+            coef_temp = 0.0034;
+        } else if (strcmp(material, "cobre") == 0) {
+            resistividad = 1.68e-8;
+            coef_temp = 0.00393;
+        } else if (strcmp(material, "aluminio") == 0) {
+            resistividad = 2.82e-8;
+            coef_temp = 0.0039;
+        } else {
+            printf("Ingrese la resistividad del material (Ohm·metro): ");
+            scanf("%lf", &resistividad);
+            printf("Ingrese el coeficiente de temperatura (1/°C): ");
+            scanf("%lf", &coef_temp);
+        }
+
+        // Pedimos datos físicos del conductor
+        printf("Ingrese la longitud del conductor (metros): ");
+        scanf("%lf", &longitud);
+        printf("Ingrese el área de la sección transversal (m^2): ");
+        scanf("%lf", &area);
+        printf("Ingrese la temperatura de operación (°C): ");
+        scanf("%lf", &temperatura);
+
+        // Cálculo de resistencia a 20 °C
+        R20 = resistividad * (longitud / area);
+
+        // Cálculo considerando la temperatura real
+        R = R20 * (1 + coef_temp * (temperatura - 20));
+
+        printf("Resistencia del conductor a %.1f°C: %.6f ohmios\n", temperatura, R);
+```
+
+
+**Calcular Resistencia para un LED**
+
+Un LED necesita una corriente muy específica. Si conectamos un LED directamente a una fuente de voltaje más alta que la tensión del LED, se quemará. Por eso usamos una resistencia limitadora, que absorbe el exceso de voltaje.
+
+### Fórmulas:
+
+1. **Voltaje sobre la resistencia**:
+\[
+V_R = V_{fuente} - V_{LED\_total}
+\]
+- Si están **en serie**: \( V_{LED\_total} = V_f \cdot n \)
+- Si están **en paralelo**: \( V_{LED\_total} = V_f \)
+
+2. **Resistencia necesaria**:
+\[
+R = \frac{V_R}{I_{total}}
+\]
+
+3. **Potencia disipada por la resistencia**:
+\[
+P_R = R \cdot I_{total}^2
+\]
+
+4. **Potencia total del circuito**:
+\[
+P_{total} = V_{fuente} \cdot I_{total}
+\]
+
+
+```c
+    } else if (strcmp(opcion, "led") == 0) {
+        double V_fuente, V_f, I_f, V_R, R, P_R, P_total, I_total;
+        int num_leds;
+        char tipo_conexion[10];
+
+        printf("\n--- CALCULAR RESISTENCIA PARA UN LED ---\n");
+        printf("Ingrese la tensión de la fuente (V): ");
+        scanf("%lf", &V_fuente);
+        printf("Ingrese el número de LEDs: ");
+        scanf("%d", &num_leds);
+        printf("Tipo de conexión (serie/paralelo): ");
+        scanf("%s", tipo_conexion);
+        printf("Ingrese la tensión nominal del LED (V): ");
+        scanf("%lf", &V_f);
+        printf("Ingrese la corriente nominal del LED (A): ");
+        scanf("%lf", &I_f);
+
+        // Calcular tensión que debe caer en la resistencia
+        if (strcmp(tipo_conexion, "serie") == 0) {
+            V_R = V_fuente - (V_f * num_leds);
+            I_total = I_f;
+        } else if (strcmp(tipo_conexion, "paralelo") == 0) {
+            V_R = V_fuente - V_f;
+            I_total = I_f * num_leds;
+        } else {
+            printf("Conexión no válida. Debe ser 'serie' o 'paralelo'.\n");
+            return 1;
+        }
+
+        if (V_R <= 0) {
+            printf("Error: la tensión de la fuente es insuficiente.\n");
+            return 1;
+        }
+
+        R = V_R / I_total;
+        P_R = R * I_total * I_total;
+        P_total = V_fuente * I_total;
+
+        printf("\n--- RESULTADOS ---\n");
+        printf("Resistencia necesaria: %.2f ohmios\n", R);
+        printf("Potencia disipada por la resistencia: %.2f W\n", P_R);
+        printf("Potencia total del circuito: %.2f W\n", P_total);
+        printf("Corriente total: %.2f A\n", I_total);
+    } else {
+        printf("Opción no reconocida.\n");
+    }
+
+    return 0;
+}
+```
