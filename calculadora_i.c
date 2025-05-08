@@ -165,7 +165,7 @@ void calcularResistenciaLED() {
     printf("Corriente total: %.2f A\n", I_total);
 }
 
-// ---------------- MAIN ----------------
+//  MAIN 
 
 int main() {
     int opcion;
