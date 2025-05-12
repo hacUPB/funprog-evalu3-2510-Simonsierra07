@@ -1,6 +1,6 @@
+// link video https://youtu.be/CPNHW9YrztE
 #include <stdio.h>
 #include <string.h>
-#include <math.h>
 
 void calcularLeyOhm() {
     int opcion;

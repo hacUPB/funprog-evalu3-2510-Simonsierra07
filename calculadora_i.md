@@ -1,4 +1,4 @@
-
+Link video https://youtu.be/CPNHW9YrztE
 
 El programa tendrá un **menú principal** que te permitirá elegir entre varias opciones. Dependiendo de la opción que elijas, el programa realizará diferentes cálculos relacionados con la ingeniería eléctrica, como la Ley de Ohm, el factor de potencia, la resistencia de un conductor y la resistencia para un LED.
 
